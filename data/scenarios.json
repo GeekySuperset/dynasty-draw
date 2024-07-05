@@ -1,0 +1,87 @@
+[
+    {
+        "name": "Promised Land",
+        "description": "Guide a team to their first-ever national championship. This scenario is for programs that have never won a national title and are waiting for a hero to lead them to the Promised Land.",
+        "conference": [],
+        "conditions": {
+            "national_championships": { "eq": 0 }
+        }
+    },
+    {
+        "name": "Return to Glory",
+        "description": "Take on the challenge of restoring a once-great program to its former glory. This scenario is for teams that have tasted championship success but have fallen on hard times and are currently rated as 3 stars or below.",
+        "conference": [],
+        "conditions": {
+            "prestige": { "lte": 3 },
+            "national_championships": { "gt": 0 }
+        }
+    },
+    {
+        "name": "End the Drought",
+        "description": "Bring back the glory days for a team that has won a national championship, but hasn't tasted victory in the last 25 years. This scenario is perfect for those who want to end long-standing droughts and return to the top.",
+        "conference": [],
+        "conditions": {
+            "national_championships": { "gt": 0 },
+            "last_championship_year": { "lt": 1998 }
+        }
+    },
+    {
+        "name": "Sleeping Giants",
+        "description": "Awaken a team that has a rich history but has been dormant for years. This scenario is for teams with at least two national championship but none in the last 50 years.",
+        "conference": [],
+        "conditions": {
+            "national_championships": { "gt": 1 },
+            "last_championship_year": { "lt": 1973 }
+        }
+    },
+    {
+        "name": "New Kids on the Block",
+        "description": "Take on a team that is relatively new to Division 1 football. This scenario features teams that started playing D1 football since 2013.",
+        "conference": [],
+        "conditions": {
+            "first_d1_year": { "gte": 2013 }
+        }
+    },
+    {
+        "name": "Fill Big Shoes",
+        "description": "Take over a powerhouse program and maintain its legacy. This scenario is for teams that are currently rated as 5 stars.",
+        "conference": [],
+        "conditions": {
+            "prestige": { "eq": 5 }
+        }
+    },
+    {
+        "name": "Underdog Story",
+        "description": "Lead an underdog team to greatness. This scenario features teams that are currently rated as 1-star programs.",
+        "conference": [],
+        "rank": "any",
+        "conditions": {
+            "prestige": { "eq": 1 }
+        }
+    },
+    {
+        "name": "Long Time Coming",
+        "description": "Lead a team that has been playing Division 1 football for over 100 years but has never won a national championship. It's time to make history!",
+        "conference": [],
+        "conditions": {
+            "national_championships": { "eq": 0 },
+            "first_d1_year": { "lte": 1923 }
+        }
+    },
+    {
+        "name": "Unranked to Unstoppable",
+        "description": "Take an unranked team and turn them into a powerhouse. This scenario is for teams that are currently unranked in the preseason polls.",
+        "conference": [],
+        "conditions": {
+            "top_25_rank": { "eq": 0 }
+        }
+    },
+    {
+        "name": "Keep it Going",
+        "description": "Take a ranked team and keep the momentum going. This scenario is for teams that are currently ranked in the preseason polls.",
+        "conference": [],
+        "conditions": {
+            "top_25_rank": { "gte": 1 }
+        }
+    }
+]
