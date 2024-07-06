@@ -2,6 +2,7 @@
 const UIState = {
     SCENARIOS: 'scenarios',
     CUSTOM: 'custom',
+    LOADING: 'loading',
     RESULTS: 'results'
 };
 
@@ -20,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const scenariosContainer = document.getElementById('scenarios-container');
     const intakeFormContainer = document.getElementById('intake-form-container');
     const randmomizerTypeButton = document.getElementById('randomizer-type-button');
+    const loadingScreen = document.getElementById('loading-screen');
     let selectedScenario = null;
 
     let _uiState = UIState.SCENARIOS;
@@ -27,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTeams().then(teams => {
         loadScenarios(teams);
     });
+    randomizeLoadingMessage();
     
     
 
@@ -108,15 +111,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 customScenarioContainer.classList.add('hidden');
                 resultContainer.classList.add('hidden');
                 randmomizerTypeButton.textContent = 'Customize Your Scenario';
+                loadingScreen.classList.add('hidden');
                 break;
             case UIState.CUSTOM:
                 intakeFormContainer.classList.remove('hidden');
+                loadingScreen.classList.add('hidden');
                 scenariosContainer.classList.add('hidden');
                 customScenarioContainer.classList.remove('hidden');
                 resultContainer.classList.add('hidden');
                 randmomizerTypeButton.textContent = 'Pre-Built Scenarios';
                 break;
+            case UIState.LOADING:
+                loadingScreen.classList.remove('hidden');
+                intakeFormContainer.classList.add('hidden');
+                resultContainer.classList.add('hidden');
+                // fire a timer in 1 second to simulate loading and change the state to results
+                setTimeout(() => {
+                    setUIState(UIState.RESULTS);
+                    randomizeLoadingMessage();
+                }, 1500);
+                break;
             case UIState.RESULTS:
+                loadingScreen.classList.add('hidden');
                 intakeFormContainer.classList.add('hidden');
                 resultContainer.classList.remove('hidden');
                 break;
@@ -144,6 +160,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await response.text();
         const teams = parseCSV(data);
         return teams; 
+    }
+
+    async function randomizeLoadingMessage() {
+        const loadingMessage = await getRandomLoadingMessage();
+        document.getElementById('loading-title').textContent = loadingMessage.title;
+        document.getElementById('loading-subtitle').textContent = loadingMessage.subtitle;
+
+    }
+
+    async function getRandomLoadingMessage() {
+        try {
+            const response = await fetch('data/loading_messages.json');
+            const data = await response.json();
+            const loadingMessages = data.loadingMessages;
+            const randomIndex = Math.floor(Math.random() * loadingMessages.length);
+            return loadingMessages[randomIndex];
+        } catch (error) {
+            console.error('Error loading the JSON file:', error);
+            return null; // or provide a default message
+        }
     }
 
     function parseCSV(data) {
@@ -272,6 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
             resultDiv.textContent = 'No team matches the selected criteria.';
             teamDetailsDiv.innerHTML = '';
         }
-        setUIState(UIState.RESULTS);
+        setUIState(UIState.LOADING);
     }
 });

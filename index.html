@@ -102,6 +102,16 @@
             </div>
             
         </div>
+        <div id="loading-screen" class="flex flex-col items-center justify-center p-10  space-y-6">
+            <div class="flex justify-center mb-4">
+                <svg class="animate-spin h-16 w-16 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                </svg>
+            </div>
+            <h1 id="loading-title" class="text-2xl text-blue-600 font-bold text-center">Randomizing Your Team!</h1>
+            <p id="loading-subtitle" class="text-lg text-gray-700 text-center">Hang tight, the perfect team is being picked just for you...</p>
+        </div>
         
         <div id="resultContainer" class="hidden">
             <div id="result" class="mt-4 text-2xl font-semibold text-center text-gray-800"></div>
