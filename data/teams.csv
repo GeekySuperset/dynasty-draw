@@ -7,7 +7,7 @@ Arizona,Wildcats,Big 12,0,,3,23,1899
 Arizona State,Sun Devils,Big 12,0,,3,,1897
 Arkansas,Razorbacks,SEC,1,1964,3,,1894
 Arkansas State,Red Wolves,Sun Belt,0,,2,,1911
-Army,Black Knights,Independent,3,1946,2,,1890
+Army,Black Knights,American,3,1946,2,,1890
 Auburn,Tigers,SEC,2,2010,4,,1892
 Ball State,Cardinals,MAC,0,,2,,1924
 Baylor,Bears,Big 12,0,,3,,1899
@@ -28,7 +28,7 @@ Duke,Blue Devils,ACC,0,,3,,1888
 East Carolina,Pirates,American,0,,2,,1932
 Eastern Michigan,Eagles,MAC,0,,1,,1975
 Florida,Gators,SEC,3,2008,5,,1906
-Florida Atlantic,Owls,Conference USA,0,,2,,2001
+Florida Atlantic,Owls,American,0,,2,,2001
 Florida International,Panthers,Conference USA,0,,1,,2005
 Florida State,Seminoles,ACC,3,2013,4,12,1947
 Fresno State,Bulldogs,Mountain West,0,,2,,1921
@@ -55,7 +55,7 @@ Louisiana Tech,Bulldogs,Conference USA,0,,2,,1975
 Louisiana-Monroe,Warhawks,Sun Belt,0,,1,,1994
 Louisville,Cardinals,ACC,0,,3,,1912
 LSU,Tigers,SEC,4,2019,5,8,1893
-Marshall,Thundering Herd,Conference USA,0,,2,,1997
+Marshall,Thundering Herd,Sun Belt,0,,2,,1997
 Maryland,Terps,Big 10,1,1953,3,,1892
 Memphis,Tigers,American,0,,3,,1912
 Miami,Hurricanes,ACC,5,2001,4,13,1926
@@ -70,10 +70,10 @@ Navy,Midshipmen,American,1,1926,3,,1879
 Nebraska,Cornhuskers,Big 10,5,1997,3,,1890
 Nevada,Wolf Pack,Mountain West,0,,2,,1992
 New Mexico,Lobos,Mountain West,0,,1,,1931
-New Mexico State,Aggies,Independent,0,,1,,1917
+New Mexico State,Aggies,Conference USA,0,,1,,1917
 North Carolina,Tar Heels,ACC,0,,3,,1888
 North Carolina State,Wolfpack,ACC,0,,3,21,1892
-North Texas,Mean Green,Conference USA,0,,2,,1957
+North Texas,Mean Green,American,0,,2,,1957
 Northern Illinois,Huskies,MAC,0,,2,,1969
 Northwestern,Wildcats,Big 10,0,,3,,1876
 Notre Dame,Fighting Irish,Independent,11,1988,5,7,1887
@@ -88,12 +88,12 @@ Oregon State,Beavers,Pac 12,0,,3,,1893
 Penn State,Nittany Lions,Big 10,2,1986,4,9,1887
 Pittsburgh,Panthers,ACC,9,1976,3,,1890
 Purdue,Boilermakers,Big 10,0,,3,,1887
-Rice,Owls,Conference USA,0,,2,,1914
+Rice,Owls,American,0,,2,,1914
 Rutgers,Scarlet Knights,Big 10,1,1869,2,,1869
 San Diego State,Aztecs,Mountain West,0,,2,,1969
 San Jose State,Spartans,Mountain West,0,,2,,1950
 Sam Houston State,Bearkats,Conference USA,0,,1,,2023
-SMU,Mustangs,American,0,,3,,1915
+SMU,Mustangs,ACC,0,,3,,1915
 South Alabama,Jaguars,Sun Belt,0,,2,,2012
 South Carolina,Gamecocks,SEC,0,,3,,1892
 South Florida,Bulls,American,0,,2,,1997
@@ -126,7 +126,7 @@ Vanderbilt,Commodores,SEC,0,,3,,1890
 Virginia,Cavaliers,ACC,0,,3,,1888
 Virginia Tech,Hokies,ACC,0,,4,20,1892
 Wake Forest,Demon Deacons,ACC,0,,3,,1888
-Washington,Huskies,Pac 12,2,1991,3,,1889
+Washington,Huskies,Big 10,2,1991,3,,1889
 Washington State,Cougars,Pac 12,0,,3,,1894
 West Virginia,Mountaineers,Big 12,0,,3,,1891
 Western Kentucky,Hilltoppers,Conference USA,0,,2,,1908
