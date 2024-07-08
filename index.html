@@ -112,10 +112,50 @@
             <h1 id="loading-title" class="text-2xl text-blue-600 font-bold text-center">Randomizing Your Team!</h1>
             <p id="loading-subtitle" class="text-lg text-gray-700 text-center">Hang tight, the perfect team is being picked just for you...</p>
         </div>
-        
-        <div id="resultContainer" class="hidden">
-            <div id="result" class="mt-4 text-2xl font-semibold text-center text-gray-800"></div>
-            <div id="teamDetails" class="mt-4 text-center"></div>
+        <div id="result-container">
+            <div id="result-error-container" class=" text-red-700 px-4 py-3  relative" role="alert">
+                <strong class="font-bold">Unable to locate a match</strong>
+                <span class="block sm:inline" id="result-error-message">Looks like there are no teams that meet that criteria. Try again?</span>
+            </div>
+            <div id="result-team-container">
+                <div id="result-scenario-container" class="mb-4">
+                    <div class="text-xl font-bold text-center text-gray-600">Scenario</div>
+                    <div id="result-scenario-name" class="text-lg font-semibold text-center text-gray-400">Custom Scenario</div>
+                </div>
+                <div class="flex justify-between items-start">
+                    <div>
+                    <div id="result-team-name" class="text-2xl font-semibold text-left text-gray-800">Team Name</div>
+                    <div id="result-team-location" class="text-lg font-semibold text-left text-gray-500">Team City, State</div>
+                    <div id="result-team-prestige" class="text-lg text-left text-gray-600">★★★★★</div>
+                    <div id="result-team-stadium" class="text-lg font-semibold text-left text-gray-500">Stadium Name</div>
+                    </div>
+                    <img id="result-team-logo" src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/103.png" alt="Team Icon" class="h-10 w-10">
+                </div>
+                <div class="mx-auto bg-white p-4" style="max-width: 200px;">
+                    <div class="font-bold text-lg text-center text-gray-800 mb-4">Rankings</div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-center">
+                            <div class="text-sm text-gray-500">Overall</div>
+                            <div id="result-overall-ranking" class="text-2xl font-semibold text-gray-800">TBD</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-500">Offense</div>
+                            <div id="result-offense-ranking" class="text-2xl font-semibold text-gray-800">TBD</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-sm text-gray-500">Defense</div>
+                            <div id="result-defense-ranking" class="text-2xl font-semibold text-gray-800">TBD</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-auto bg-white mt-4">
+                    <p class="text-sm text-gray-500">First D1 Year: <span id="result-first-d1-year" class="font-semibold text-gray-800">1890</span></p>
+                    <p class="text-sm text-gray-500">Conference: <span id="result-conference" class="font-semibold text-gray-800">Big 12</span></p>
+                    <p class="text-sm text-gray-500">National Championships: <span id="result-national-championships" class="font-semibold text-gray-800">1</span></p>
+                    <p class="text-sm text-gray-500">Last Championship Year: <span id="result-last-championship-year" class="font-semibold text-gray-800">1922</span></p>
+                </div>
+                
+            </div>
             <div class="mt-4 flex flex-col space-y-2">
                 <button id="mulliganButton" class="bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 w-full">Mulligan - Draw Again</button>
                 <button id="resetButton" class="bg-red-500 text-white p-2 rounded hover:bg-red-600 w-full">Reset</button>

@@ -12,10 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const championshipCheckboxes = document.querySelectorAll('input[name="championship"]');
     const rankCheckboxes = document.querySelectorAll('input[name="rank"]');
     const firstD1YearSelect = document.getElementById('first_d1_year');
-    const resultDiv = document.getElementById('result');
-    const teamDetailsDiv = document.getElementById('teamDetails');
+
     const customScenarioContainer = document.getElementById('custom-scenario-container');
-    const resultContainer = document.getElementById('resultContainer');
+    
+    const resultContainer = document.getElementById('result-container');
+    const resultTeamContainer = document.getElementById('result-team-container');
+    const resultErrorContainer = document.getElementById('result-error-container');
+    
+
     const mulliganButton = document.getElementById('mulliganButton');
     const resetButton = document.getElementById('resetButton');
     const scenariosContainer = document.getElementById('scenarios-container');
@@ -202,8 +206,95 @@ document.addEventListener('DOMContentLoaded', () => {
             team.last_championship_year = team.last_championship_year ? parseInt(team.last_championship_year) : null;
             team.first_d1_year = parseInt(team.first_d1_year);
             team.prestige = parseInt(team.prestige);
+            team.overall = team.overall ? parseInt(team.overall) : null;
+            team.offense = team.offense ? parseInt(team.offense) : null;
+            team.defense = team.defense ? parseInt(team.defense) : null;
+            team.stadium_capacity = team.stadium_capacity ? parseInt(team.stadium_capacity) : null;
         });
         return mappedTeams;
+    }
+
+    function updateResultsComponent(team, scenario) {
+        if (team) {
+            const scenarioContainerElement = document.getElementById('result-scenario-container');
+            if (scenario) {
+                const scenarioNameElement = document.getElementById('result-scenario-name');
+                scenarioNameElement.textContent = scenario.name;
+                scenarioContainerElement.classList.remove('hidden');
+            } else {
+                scenarioContainerElement.classList.add('hidden');
+            }
+
+            const ranking = team.top_25_rank ? `#${team.top_25_rank} ` : '';
+            document.getElementById('result-team-name').textContent = `${ranking}${team.team} ${team.nickname}`;
+
+            const locationElement = document.getElementById('result-team-location');
+            if (team.city && team.state) {
+                locationElement.textContent = `${team.city}, ${team.state}`;
+                locationElement.classList.remove('hidden');
+            } else {
+                
+                locationElement.textContent = '';
+                locationElement.classList.add('hidden');
+            }
+
+            const stadiumElement = document.getElementById('result-team-stadium');
+            if (team.stadium_name && team.stadium_capacity) {
+                const formattedCapacityString = team.stadium_capacity.toLocaleString();
+                stadiumElement.textContent = `${team.stadium_name} (Capacity: ${formattedCapacityString})`;
+                stadiumElement.classList.remove('hidden');
+            } else {
+                stadiumElement.textContent = '';
+                stadiumElement.classList.add('hidden');
+            }
+
+            const logoElement = document.getElementById('result-team-logo');
+            if (team.logo_url) {
+                logoElement.src = team.logo_url;
+                logoElement.classList.remove('hidden');
+            } else {
+                logoElement.classList.add('hidden');
+            }
+
+            let prestageStars = '';
+            for (let i = 0; i < team.prestige; i++) {
+                prestageStars += '★';
+            }
+            document.getElementById('result-team-prestige').innerHTML = prestageStars;
+
+            const overallElement = document.getElementById('result-overall-ranking');
+            if (team.overall) {
+                overallElement.textContent = team.overall;
+            } else {
+                overallElement.textContent = 'TBD';
+            }
+            const offenseElement = document.getElementById('result-offense-ranking');
+            if (team.offense) {
+                offenseElement.textContent = team.offense;
+            } else {
+                offenseElement.textContent = 'TBD';
+            }
+            const defenseElement = document.getElementById('result-defense-ranking');
+            if (team.defense) {
+                defenseElement.textContent = team.defense;
+            } else {
+                defenseElement.textContent = 'TBD';
+            }
+
+            document.getElementById('result-first-d1-year').textContent = team.first_d1_year;
+            document.getElementById('result-national-championships').textContent = team.national_championships;
+            document.getElementById('result-last-championship-year').textContent = team.last_championship_year || 'N/A';
+            document.getElementById('result-conference').textContent = team.conference;
+
+            resultTeamContainer.classList.remove('hidden');
+            resultErrorContainer.classList.add('hidden');
+        } else {
+            resultTeamContainer.classList.add('hidden');
+            resultErrorContainer.classList.remove('hidden');
+        }
+
+        
+
     }
 
     function filterTeams(teams) {
@@ -288,26 +379,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayResult(team, scenario) {
-        if (team) {
-            
-            const ranking = team.top_25_rank ? `#${team.top_25_rank} ` : '';
-            resultDiv.textContent = `${ranking}${team.team} ${team.nickname}`;
-
-            const scenarioDisplay = scenario ? `<p><strong>Scenario:</strong> ${scenario.name}</p>` : '';
-
-            teamDetailsDiv.innerHTML = `
-
-                ${scenarioDisplay}
-                <p><strong>Conference:</strong> ${team.conference}</p>
-                <p><strong>National Championships:</strong> ${team.national_championships}</p>
-                <p><strong>Last Championship Year:</strong> ${team.last_championship_year || 'N/A'}</p>
-                <p><strong>First D1 Year:</strong> ${team.first_d1_year}</p>
-                <p><strong>Prestige:</strong> ${'★'.repeat(team.prestige)}</p>
-            `;
-        } else {
-            resultDiv.textContent = 'No team matches the selected criteria.';
-            teamDetailsDiv.innerHTML = '';
-        }
+        updateResultsComponent(team, scenario);
         setUIState(UIState.LOADING);
     }
 });
