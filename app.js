@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const scenarioBlock = document.createElement('div');
                 scenarioBlock.classList.add('scenario-block');
                 scenarioBlock.innerHTML = `
-                    <div class="scenario-title">${scenario.name}</div>
-                    <div class="scenario-number-of-teams">${filteredTeams.length} Teams</div>
-                    <div class="scenario-description">${scenario.description}</div>
+                    <div class="scenario-title font-cfbheadlines">${scenario.name.toUpperCase()}</div>
+                    <div class="scenario-number-of-teams font-cfbsubheading">${filteredTeams.length} Teams</div>
+                    <div class="scenario-description font-cfbbody">${scenario.description}</div>
                 `;
                 scenarioBlock.addEventListener('click', () => {
                     selectedScenario = scenario;
@@ -226,11 +226,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             const ranking = team.top_25_rank ? `#${team.top_25_rank} ` : '';
-            document.getElementById('result-team-name').textContent = `${ranking}${team.team} ${team.nickname}`;
+            const teamNameString = `${ranking}${team.team} ${team.nickname}`.toUpperCase();
+            document.getElementById('result-team-name').textContent = teamNameString;
 
             const locationElement = document.getElementById('result-team-location');
             if (team.city && team.state) {
-                locationElement.textContent = `${team.city}, ${team.state}`;
+                locationElement.textContent = `${team.city}, ${team.state}`.toUpperCase();
                 locationElement.classList.remove('hidden');
             } else {
                 
@@ -241,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const stadiumElement = document.getElementById('result-team-stadium');
             if (team.stadium_name && team.stadium_capacity) {
                 const formattedCapacityString = team.stadium_capacity.toLocaleString();
-                stadiumElement.textContent = `${team.stadium_name} (Capacity: ${formattedCapacityString})`;
+                stadiumElement.textContent = `${team.stadium_name} (Capacity: ${formattedCapacityString})`.toUpperCase();
                 stadiumElement.classList.remove('hidden');
             } else {
                 stadiumElement.textContent = '';

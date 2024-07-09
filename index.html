@@ -1,167 +1,563 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynasty Draw</title>
-    <link rel="stylesheet" href="dist/styles.css">
-    <style>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dynasty Draw</title>
+        <link rel="stylesheet" href="dist/styles.css" />
+        <style>
+            .scenario-block {
+                padding: 20px;
+                margin-bottom: 20px;
+                background-color: #000000;
+                border: 1px solid #111111;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: transform 0.3s ease, background-color 0.3s ease;
+            }
+            .scenario-block:hover {
+                transform: scale(1.05);
+                background-color: #111111;
+            }
+            .scenario-title {
+                font-size: 1.25rem;
+                font-weight: bold;
+                color: #ffffff;
+            }
+            .scenario-number-of-teams {
+                color: #ffffff;
+            }
+            .scenario-description {
+                margin-top: 10px;
+                color: #ffffff;
+            }
+        </style>
+        <style>
+            @font-face {
+                font-family: 'CFBHeadlines';
+                src: url(https://media.contentapi.ea.com/content/dam/ea/college-football/college-football-25/fonts/tt-20octosquares-20compressed-20bold.otf);
+                font-weight: 400;
+            }
+        </style>
+        <style>
+            @font-face {
+                font-family: 'CFBBody';
+                src: url(https://media.contentapi.ea.com/content/dam/ea/college-football/college-football-25/fonts/tthoveslight.ttf);
+                font-weight: 400;
+            }
+        </style>
+        <style>
+            @font-face {
+                font-family: 'CFBSubheading';
+                src: url(https://media.contentapi.ea.com/content/dam/ea/college-football/college-football-25/fonts/tt-20octosquares-20expanded-20bold.otf);
+                font-weight: 400;
+            }
+        </style>
+    </head>
+    <body class="bg-campus-black flex items-center justify-center min-h-screen">
+        <!-- Navbar -->
+        <div
+            class="fixed top-0 left-0 w-full bg-black text-white text-center py-4 z-10 text-5xl font-cfbheadlines"
+        >
+            DYNASTY DRAW
+        </div>
 
-        .scenario-block {
-            padding: 20px;
-            margin-bottom: 20px;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        .scenario-block:hover {
-            transform: scale(1.05);
-            background-color: #e9ecef;
-        }
-        .scenario-title {
-            font-size: 1.25rem;
-            font-weight: bold;
-        }
-        .scenario-description {
-            margin-top: 10px;
-            color: #6c757d;
-        }
-    </style>
-</head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div id="app" class="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full">
-        <div id="intake-form-container">
-            <div id="top-info" class="max-w-md mx-auto py-2">
-                <h1 class="text-5xl font-bold mb-4 text-center">Dynasty Draw</h1>
-                <div class="text-left">
-                    <p class="mb-4">EA Sports College Football is back, and with it comes everyone's favorite mode - Dynasty!</p>
-                    <p>Use DynastyDraw.com to find teams to take over and lead to the National Championship, or use it as a randomizer for choosing teams in a multi-user dynasty.</p>
-                </div>
-            </div>
-            <div class="px-2 py-2">
-                <button id="randomizer-type-button" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Custom Scenario</button>
-            </div>
-            <div id="scenarios-container" class="">
-                <!-- Scenarios will be dynamically loaded here -->
-            </div>
-            <div id="custom-scenario-container" class="">
-                <div class="mb-4">
-                    <label for="conference" class="block text-sm font-medium text-gray-700 mb-2">Conference:</label>
-                    <div class="space-y-2">
-                        <div><input type="checkbox" id="sec" name="conference" value="SEC" checked class="mr-2"><label for="sec">SEC</label></div>
-                        <div><input type="checkbox" id="big12" name="conference" value="Big 12" checked class="mr-2"><label for="big12">BIG 12</label></div>
-                        <div><input type="checkbox" id="big10" name="conference" value="Big 10" checked class="mr-2"><label for="big10">BIG 10</label></div>
-                        <div><input type="checkbox" id="acc" name="conference" value="ACC" checked class="mr-2"><label for="acc">ACC</label></div>
-                        <div><input type="checkbox" id="pac12" name="conference" value="Pac 12" checked class="mr-2"><label for="pac12">Pac-12</label></div>
-                        <div><input type="checkbox" id="american" name="conference" value="American" checked class="mr-2"><label for="american">American</label></div>
-                        <div><input type="checkbox" id="mountainWest" name="conference" value="Mountain West" checked class="mr-2"><label for="mountainWest">Mountain West</label></div>
-                        <div><input type="checkbox" id="mac" name="conference" value="MAC" checked class="mr-2"><label for="mac">MAC</label></div>
-                        <div><input type="checkbox" id="conferenceUSA" name="conference" value="Conference USA" checked class="mr-2"><label for="conferenceUSA">Conference USA</label></div>
-                        <div><input type="checkbox" id="sunBelt" name="conference" value="Sun Belt" checked class="mr-2"><label for="sunBelt">Sun Belt</label></div>
-                        <div><input type="checkbox" id="independent" name="conference" value="Independent" checked class="mr-2"><label for="independent">Independent</label></div>
+        <!-- Adjust the top padding of the main content to prevent it from being hidden by the navbar -->
+        <div
+            id="app"
+            class="bg-campus-black rounded-lg p-8 max-w-lg w-full mt-16"
+        >
+            <div id="intake-form-container">
+                <div id="top-info" class="max-w-md mx-auto py-2">
+                    <div class="text-left text-white font-cfbbody">
+                        <p class="mb-4">
+                            EA Sports College Football is back, and with it
+                            comes everyone's favorite mode - Dynasty!
+                        </p>
+                        <p>
+                            Use DynastyDraw.com to find teams to take over and
+                            lead to the National Championship, or use it as a
+                            randomizer for choosing teams in a multi-user
+                            dynasty.
+                        </p>
                     </div>
                 </div>
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">National Championships:</label>
-                    <div class="space-y-2">
-                        <div><input type="checkbox" id="champ_one_or_more" name="championship" value="one_or_more" checked class="mr-2"><label for="champ_one_or_more">One or more</label></div>
-                        <div><input type="checkbox" id="champ_zero" name="championship" value="zero" checked class="mr-2"><label for="champ_zero">Zero</label></div>
-                    </div>
+                <div class="px-2 py-2">
+                    <button
+                        id="randomizer-type-button"
+                        class="w-full bg-campus-yellow text-black p-2 rounded hover:bg-black hover:text-white font-cfbheadlines text-xl"
+                    >
+                        Custom Scenario
+                    </button>
                 </div>
-                <div class="mb-4">
-                    <label for="prestige" class="block text-sm font-medium text-gray-700 mb-2">Prestige:</label>
-                    <div class="space-y-2">
-                        <div><input type="checkbox" id="1star" name="prestige" value="1" checked class="mr-2"><label for="1star">1 Star</label></div>
-                        <div><input type="checkbox" id="2star" name="prestige" value="2" checked class="mr-2"><label for="2star">2 Star</label></div>
-                        <div><input type="checkbox" id="3star" name="prestige" value="3" checked class="mr-2"><label for="3star">3 Star</label></div>
-                        <div><input type="checkbox" id="4star" name="prestige" value="4" checked class="mr-2"><label for="4star">4 Star</label></div>
-                        <div><input type="checkbox" id="5star" name="prestige" value="5" checked class="mr-2"><label for="5star">5 Star</label></div>
-                    </div>
+                <div id="scenarios-container" class="">
+                    <!-- Scenarios will be dynamically loaded here -->
                 </div>
-                <div class="mb-4">
-                    <label for="rank" class="block text-sm font-medium text-gray-700 mb-2">Ranking:</label>
-                    <div class="space-y-2">
-                        <div><input type="checkbox" id="top25" name="rank" value="top_25" checked class="mr-2"><label for="top_25">Top 25</label></div>
-                        <div><input type="checkbox" id="outsideTop25" name="rank" value="outside_top_25" checked class="mr-2"><label for="outsideTop25">Outside Top 25</label></div>
-                        
-                    </div>
-                </div>
-                <div class="mb-4">
-                    <label for="first_d1_year" class="block text-sm font-medium text-gray-700 mb-2">First D1 Year:</label>
-                    <select id="first_d1_year" class="block w-full p-2 border border-gray-300 rounded">
-                        <option value="any">Any</option>
-                        <option value="1800s">1800s</option>
-                        <option value="1900-1949">1900-1949</option>
-                        <option value="1950-1999">1950-1999</option>
-                        <option value="2000-present">2000-present</option>
-                    </select>
-                </div>
-                <button id="randomizeButton" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Randomize Team</button>
-            </div>
-            
-        </div>
-        <div id="loading-screen" class="flex flex-col items-center justify-center p-10  space-y-6">
-            <div class="flex justify-center mb-4">
-                <svg class="animate-spin h-16 w-16 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-                </svg>
-            </div>
-            <h1 id="loading-title" class="text-2xl text-blue-600 font-bold text-center">Randomizing Your Team!</h1>
-            <p id="loading-subtitle" class="text-lg text-gray-700 text-center">Hang tight, the perfect team is being picked just for you...</p>
-        </div>
-        <div id="result-container">
-            <div id="result-error-container" class=" text-red-700 px-4 py-3  relative" role="alert">
-                <strong class="font-bold">Unable to locate a match</strong>
-                <span class="block sm:inline" id="result-error-message">Looks like there are no teams that meet that criteria. Try again?</span>
-            </div>
-            <div id="result-team-container">
-                <div id="result-scenario-container" class="mb-4">
-                    <div class="text-xl font-bold text-center text-gray-600">Scenario</div>
-                    <div id="result-scenario-name" class="text-lg font-semibold text-center text-gray-400">Custom Scenario</div>
-                </div>
-                <div class="flex justify-between items-start">
-                    <div>
-                    <div id="result-team-name" class="text-2xl font-semibold text-left text-gray-800">Team Name</div>
-                    <div id="result-team-location" class="text-lg font-semibold text-left text-gray-500">Team City, State</div>
-                    <div id="result-team-prestige" class="text-lg text-left text-gray-600">★★★★★</div>
-                    <div id="result-team-stadium" class="text-lg font-semibold text-left text-gray-500">Stadium Name</div>
-                    </div>
-                    <img id="result-team-logo" src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/103.png" alt="Team Icon" class="h-10 w-10">
-                </div>
-                <div class="mx-auto bg-white p-4" style="max-width: 200px;">
-                    <div class="font-bold text-lg text-center text-gray-800 mb-4">Rankings</div>
-                    <div class="flex justify-between items-center">
-                        <div class="text-center">
-                            <div class="text-sm text-gray-500">Overall</div>
-                            <div id="result-overall-ranking" class="text-2xl font-semibold text-gray-800">TBD</div>
+                <div id="custom-scenario-container" class="">
+                    <div class="mb-4 font-cfbbody">
+                        <label
+                            for="conference"
+                            class="block text-sm font-medium text-gray-200 mb-2"
+                            >Conference:</label
+                        >
+                        <div class="space-y-2 text-white">
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="sec"
+                                    name="conference"
+                                    value="SEC"
+                                    checked
+                                    class="mr-2"
+                                /><label for="sec">SEC</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="big12"
+                                    name="conference"
+                                    value="Big 12"
+                                    checked
+                                    class="mr-2"
+                                /><label for="big12">BIG 12</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="big10"
+                                    name="conference"
+                                    value="Big 10"
+                                    checked
+                                    class="mr-2"
+                                /><label for="big10">BIG 10</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="acc"
+                                    name="conference"
+                                    value="ACC"
+                                    checked
+                                    class="mr-2"
+                                /><label for="acc">ACC</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="pac12"
+                                    name="conference"
+                                    value="Pac 12"
+                                    checked
+                                    class="mr-2"
+                                /><label for="pac12">Pac-12</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="american"
+                                    name="conference"
+                                    value="American"
+                                    checked
+                                    class="mr-2"
+                                /><label for="american">American</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="mountainWest"
+                                    name="conference"
+                                    value="Mountain West"
+                                    checked
+                                    class="mr-2"
+                                /><label for="mountainWest"
+                                    >Mountain West</label
+                                >
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="mac"
+                                    name="conference"
+                                    value="MAC"
+                                    checked
+                                    class="mr-2"
+                                /><label for="mac">MAC</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="conferenceUSA"
+                                    name="conference"
+                                    value="Conference USA"
+                                    checked
+                                    class="mr-2"
+                                /><label for="conferenceUSA"
+                                    >Conference USA</label
+                                >
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="sunBelt"
+                                    name="conference"
+                                    value="Sun Belt"
+                                    checked
+                                    class="mr-2"
+                                /><label for="sunBelt">Sun Belt</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="independent"
+                                    name="conference"
+                                    value="Independent"
+                                    checked
+                                    class="mr-2"
+                                /><label for="independent">Independent</label>
+                            </div>
                         </div>
-                        <div class="text-center">
-                            <div class="text-sm text-gray-500">Offense</div>
-                            <div id="result-offense-ranking" class="text-2xl font-semibold text-gray-800">TBD</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-sm text-gray-500">Defense</div>
-                            <div id="result-defense-ranking" class="text-2xl font-semibold text-gray-800">TBD</div>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            class="block text-sm font-medium text-gray-200 mb-2"
+                            >National Championships:</label
+                        >
+                        <div class="space-y-2 text-white">
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="champ_one_or_more"
+                                    name="championship"
+                                    value="one_or_more"
+                                    checked
+                                    class="mr-2"
+                                /><label for="champ_one_or_more"
+                                    >One or more</label
+                                >
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="champ_zero"
+                                    name="championship"
+                                    value="zero"
+                                    checked
+                                    class="mr-2"
+                                /><label for="champ_zero">Zero</label>
+                            </div>
                         </div>
                     </div>
+                    <div class="mb-4">
+                        <label
+                            for="prestige"
+                            class="block text-sm font-medium text-gray-200 mb-2"
+                            >Prestige:</label
+                        >
+                        <div class="space-y-2 text-white">
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="1star"
+                                    name="prestige"
+                                    value="1"
+                                    checked
+                                    class="mr-2"
+                                /><label for="1star">1 Star</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="2star"
+                                    name="prestige"
+                                    value="2"
+                                    checked
+                                    class="mr-2"
+                                /><label for="2star">2 Star</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="3star"
+                                    name="prestige"
+                                    value="3"
+                                    checked
+                                    class="mr-2"
+                                /><label for="3star">3 Star</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="4star"
+                                    name="prestige"
+                                    value="4"
+                                    checked
+                                    class="mr-2"
+                                /><label for="4star">4 Star</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="5star"
+                                    name="prestige"
+                                    value="5"
+                                    checked
+                                    class="mr-2"
+                                /><label for="5star">5 Star</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="rank"
+                            class="block text-sm font-medium text-gray-200 mb-2"
+                            >Ranking:</label
+                        >
+                        <div class="space-y-2 text-white">
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="top25"
+                                    name="rank"
+                                    value="top_25"
+                                    checked
+                                    class="mr-2"
+                                /><label for="top_25">Top 25</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="checkbox"
+                                    id="outsideTop25"
+                                    name="rank"
+                                    value="outside_top_25"
+                                    checked
+                                    class="mr-2"
+                                /><label for="outsideTop25"
+                                    >Outside Top 25</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label
+                            for="first_d1_year"
+                            class="block text-sm font-medium text-gray-200 mb-2"
+                            >First D1 Year:</label
+                        >
+                        <select
+                            id="first_d1_year"
+                            class="block w-full p-2 border bg-black text-white border-gray-300 rounded"
+                        >
+                            <option value="any">Any</option>
+                            <option value="1800s">1800s</option>
+                            <option value="1900-1949">1900-1949</option>
+                            <option value="1950-1999">1950-1999</option>
+                            <option value="2000-present">2000-present</option>
+                        </select>
+                    </div>
+                    <button
+                        id="randomizeButton"
+                        class="w-full bg-campus-yellow text-black p-2 rounded hover:bg-black hover:text-white font-cfbheadlines text-xl"
+                    >
+                        Randomize Team
+                    </button>
                 </div>
-                <div class="mx-auto bg-white mt-4">
-                    <p class="text-sm text-gray-500">First D1 Year: <span id="result-first-d1-year" class="font-semibold text-gray-800">1890</span></p>
-                    <p class="text-sm text-gray-500">Conference: <span id="result-conference" class="font-semibold text-gray-800">Big 12</span></p>
-                    <p class="text-sm text-gray-500">National Championships: <span id="result-national-championships" class="font-semibold text-gray-800">1</span></p>
-                    <p class="text-sm text-gray-500">Last Championship Year: <span id="result-last-championship-year" class="font-semibold text-gray-800">1922</span></p>
-                </div>
-                
             </div>
-            <div class="mt-4 flex flex-col space-y-2">
-                <button id="mulliganButton" class="bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 w-full">Mulligan - Draw Again</button>
-                <button id="resetButton" class="bg-red-500 text-white p-2 rounded hover:bg-red-600 w-full">Reset</button>
+            <div
+                id="loading-screen"
+                class="flex bg-black flex-col items-center justify-center p-10 space-y-6 rounded-lg"
+            >
+                <div class="flex justify-center mb-4">
+                    <svg
+                        class="animate-spin h-16 w-16 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                    >
+                        <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4"
+                        ></circle>
+                        <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8H4z"
+                        ></path>
+                    </svg>
+                </div>
+                <h1
+                    id="loading-title"
+                    class="text-2xl text-white font-bold text-center font-cfbheadlines"
+                >
+                    Randomizing Your Team!
+                </h1>
+                <p
+                    id="loading-subtitle"
+                    class="text-lg text-white text-center font-cfbbody"
+                >
+                    Hang tight, the perfect team is being picked just for you...
+                </p>
+            </div>
+            <div id="result-container" class="bg-black p-8 rounded-lg">
+                <div
+                    id="result-error-container"
+                    class="text-red-700 px-4 py-3 relative"
+                    role="alert"
+                >
+                    <span class="font-bold font-cfbheadlines"
+                        >Unable to locate a match</span
+                    >
+                    <span
+                        class="block sm:inline font-cfbbody"
+                        id="result-error-message"
+                        >Looks like there are no teams that meet that criteria.
+                        Try again?</span
+                    >
+                </div>
+                <div id="result-team-container">
+                    <div id="result-scenario-container" class="mb-4">
+                        <div
+                            class="text-lg font-cfbheadlines text-center text-gray-400"
+                        >
+                            Scenario
+                        </div>
+                        <div
+                            id="result-scenario-name"
+                            class="text-xl font-cfbheadlines text-center text-white"
+                        >
+                            Custom Scenario
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <div
+                                id="result-team-name"
+                                class="text-2xl font-semibold text-left text-white font-cfbheadlines"
+                            >
+                                Team Name
+                            </div>
+                            <div
+                                id="result-team-location"
+                                class="text-lg font-cfbheadlines text-left text-gray-300"
+                            >
+                                Team City, State
+                            </div>
+                            <div
+                                id="result-team-prestige"
+                                class="text-lg text-left text-campus-yellow"
+                            >
+                                ★★★★★
+                            </div>
+                            <div
+                                id="result-team-stadium"
+                                class="text-lg font-cfbheadlines text-left text-gray-300"
+                            >
+                                Stadium Name
+                            </div>
+                        </div>
+                        <img
+                            id="result-team-logo"
+                            src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/103.png"
+                            alt="Team Icon"
+                            class="h-10 w-10"
+                        />
+                    </div>
+                    <div class="mx-auto p-4" style="max-width: 200px">
+                        <div
+                            class="font-cfbheadlines text-lg text-center text-gray-200 mb-4"
+                        >
+                            Rankings
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <div class="text-center">
+                                <div class="text-sm text-gray-200 font-cfbbody">
+                                    Overall
+                                </div>
+                                <div
+                                    id="result-overall-ranking"
+                                    class="text-3xl font-cfbheadlines text-campus-yellow"
+                                >
+                                    TBD
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-gray-200 font-cfbbody">
+                                    Offense
+                                </div>
+                                <div
+                                    id="result-offense-ranking"
+                                    class="text-3xl font-cfbheadlines text-campus-yellow"
+                                >
+                                    TBD
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-sm text-gray-200 font-cfbbody">
+                                    Defense
+                                </div>
+                                <div
+                                    id="result-defense-ranking"
+                                    class="text-3xl font-cfbheadlines text-campus-yellow"
+                                >
+                                    TBD
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mx-auto mt-4 font-cfbbody">
+                        <p class="text-sm text-gray-500">
+                            First D1 Year:
+                            <span
+                                id="result-first-d1-year"
+                                class="font-semibold text-gray-200"
+                                >1890</span
+                            >
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            Conference:
+                            <span
+                                id="result-conference"
+                                class="font-semibold text-gray-200"
+                                >Big 12</span
+                            >
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            National Championships:
+                            <span
+                                id="result-national-championships"
+                                class="font-semibold text-gray-200"
+                                >1</span
+                            >
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            Last Championship Year:
+                            <span
+                                id="result-last-championship-year"
+                                class="font-semibold text-gray-200"
+                                >1922</span
+                            >
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-4 flex flex-col space-y-2">
+                    <button
+                        id="mulliganButton"
+                        class="bg-campus-yellow text-black p-2 rounded hover:bg-yellow-600 w-full font-cfbheadlines"
+                    >
+                        MULLIGAN - DRAW AGAIN
+                    </button>
+                    <button
+                        id="resetButton"
+                        class="bg-red-500 text-black p-2 rounded hover:bg-red-600 w-full font-cfbheadlines"
+                    >
+                        RESET
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="app.js"></script>
-</body>
+        <script src="app.js"></script>
+    </body>
 </html>
