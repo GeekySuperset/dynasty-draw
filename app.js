@@ -52,6 +52,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="scenario-number-of-teams font-cfbsubheading">${filteredTeams.length} Teams</div>
                     <div class="scenario-description font-cfbbody">${scenario.description}</div>
                 `;
+
+                const teamIconsGrid = document.createElement('div');
+                teamIconsGrid.classList.add('scenario-team-logos-container'); 
+    
+                // Add team icons to the grid
+                filteredTeams.forEach(team => {
+                    const teamIcon = document.createElement('img');
+                    const optimizedLogoUrl = team.logo_url + '?w=80&h=80';
+                    teamIcon.src = optimizedLogoUrl; 
+                    teamIcon.alt = team.team; 
+                    teamIcon.title = team.team;
+                    teamIcon.classList.add('scenario-team-logo','rounded-sm'); // Adjust the size as needed
+                    teamIconsGrid.appendChild(teamIcon);
+
+                });
+    
+                // Append the team icons grid to the scenario block
+                scenarioBlock.appendChild(teamIconsGrid);
+
                 scenarioBlock.addEventListener('click', () => {
                     selectedScenario = scenario;
                     applyScenario(scenario);
