@@ -83,5 +83,21 @@
         "conditions": {
             "top_25_rank": { "gte": 1 }
         }
+    },
+    {
+        "name": "Power 5 (4?) Only",
+        "description": "Lead a prestigious Power 5 conference team to victory. This scenario is perfect for those who want to take charge of a team from one of the most competitive conferences, including Notre Dame and the Pac 12 (for now).",
+        "conference": [],
+        "conditions": {
+            "conference_type": { "eq": "p5" }
+        }
+    },
+    {
+        "name": "Group of 5 Only",
+        "description": "Take on the challenge of coaching a team from the Group of 5 conferences. This scenario includes teams from the American, Conference USA, MAC, Mountain West, Sun Belt, UConn, and UMass.",
+        "conference": [],
+        "conditions": {
+            "conference_type": { "eq": "g5" }
+        }
     }
 ]

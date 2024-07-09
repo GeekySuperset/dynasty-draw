@@ -357,7 +357,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const firstD1YearCondition = handleCondition(scenario.conditions.first_d1_year, team.first_d1_year);
 
             const rankedCondition = handleCondition(scenario.conditions.top_25_rank, team.top_25_rank);
-            return inConference && prestigeCondition && championshipCondition && lastChampionshipYearCondition && firstD1YearCondition && rankedCondition;
+            const conferenceTypeCondition = handleCondition(scenario.conditions.conference_type, team.conference_type);
+            return inConference && prestigeCondition && championshipCondition && lastChampionshipYearCondition && firstD1YearCondition && rankedCondition && conferenceTypeCondition;
         });
         return filteredTeams;
     }
@@ -377,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (condition.lt !== undefined) {
             return value < condition.lt;
         }
-        if (condition.eq !== undefined) {
+        if (condition.eq !== undefined) {            
             return value === condition.eq;
         }
         if (condition.gte !== undefined) {
