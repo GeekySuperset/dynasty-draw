@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const scenarioBlock = document.createElement('div');
                 scenarioBlock.classList.add('scenario-block');
                 scenarioBlock.innerHTML = `
-                    <div class="scenario-title font-cfbheadlines">${scenario.name.toUpperCase()}</div>
+                    <div class="scenario-title font-cfbheadlines text-3xl">${scenario.name.toUpperCase()}</div>
                     <div class="scenario-number-of-teams font-cfbsubheading">${filteredTeams.length} Teams</div>
                     <div class="scenario-description font-cfbbody">${scenario.description}</div>
                 `;
